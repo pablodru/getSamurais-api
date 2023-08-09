@@ -9,6 +9,6 @@ export const signupSchema = joi.object({
 })
 
 export const signinSchema = joi.object({
-    name: joi.string().required(),
-    email: joi.string().email().required()
+    email: joi.string().email().required(),
+    password: joi.string().required()
 })

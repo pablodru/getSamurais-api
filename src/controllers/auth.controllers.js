@@ -1,16 +1,36 @@
-import { signupDB } from "../repository/auth.repository.js";
+import bcrypt from 'bcrypt';
+import { v4 as uuid } from 'uuid';
+import { signinDB, signupDB } from "../repository/auth.repository.js";
 
 export async function signup (req, res) {
     const { name, email, password, city, phone } = req.body;
     try {
 
-        const result = signupDB(name, email, password, city, phone);
+        const hash = bcrypt.hashSync(password, 10);
+
+        const result = await signupDB(name, email, hash, city, phone);
+        console.log(result);
 
         if (result.rowCount === 0) {
-            return res.status(409).send({ message: 'Email já existente.' });
+            return res.status(409).send({ message: 'Email já existente' });
         }
 
         res.sendStatus(201);
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
+export async function signin (req, res) {
+    const { userId } = res.locals;
+    try {
+
+        const token = uuid();
+
+        await signinDB(userId, token);
+
+        res.status(200).send(token);
 
     } catch (err) {
         res.status(500).send(err.message);
