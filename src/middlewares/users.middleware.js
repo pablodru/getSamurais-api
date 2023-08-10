@@ -14,6 +14,7 @@ export async function validateSignin ( req, res, next ) {
         if ( !correctPassword ) return res.sendStatus(401);
 
         res.locals.userId = result.rows[0].id;
+        res.locals.name = result.rows[0].name;
 
         next();
 

@@ -23,14 +23,14 @@ export async function signup (req, res) {
 }
 
 export async function signin (req, res) {
-    const { userId } = res.locals;
+    const { userId, name } = res.locals;
     try {
 
         const token = uuid();
 
         await signinDB(userId, token);
 
-        res.status(200).send(token);
+        res.status(200).send({ token, name });
 
     } catch (err) {
         res.status(500).send(err.message);

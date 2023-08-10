@@ -11,7 +11,7 @@ export async function signupDB (name, email, hash, city, phone) {
 
 export async function signinValidateDB ( email ) {
     const query = `
-            SELECT password, id FROM users 
+            SELECT password, id, name FROM users 
             WHERE email=$1
     `;
     return db.query(query, [email])
