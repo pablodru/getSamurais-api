@@ -23,3 +23,10 @@ export async function signinDB ( userId, token ) {
     `
     return db.query(query, [userId, token]);
 }
+
+export async function validateAuthDB (token) {
+    const query = `
+        SELECT "userId" FROM sessions WHERE token = $1
+    `
+    return db.query(query, [token]);
+}
