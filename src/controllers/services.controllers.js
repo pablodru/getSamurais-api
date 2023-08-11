@@ -1,4 +1,4 @@
-import { postServiceDB } from "../repository/services.repository.js";
+import { getServicesDB, postServiceDB } from "../repository/services.repository.js";
 
 export async function postService (req, res) {
     const { name, description, price, photo } = req.body;
@@ -11,6 +11,19 @@ export async function postService (req, res) {
         res.sendStatus(201);
 
     } catch (err){
-        res.status(500).send(err.message)
+        return res.status(500).send(err.message)
+    }
+}
+
+export async function getServices (req, res) {
+    try {
+
+        const services = await getServicesDB();
+        console.log(services)
+
+        res.status(200).send(services.rows);
+
+    } catch (err) {
+        return res.status(500).send(err.message)
     }
 }
