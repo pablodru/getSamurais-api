@@ -19,7 +19,6 @@ export async function getServices (req, res) {
     try {
 
         const services = await getServicesDB();
-        console.log(services)
 
         res.status(200).send(services.rows);
 
