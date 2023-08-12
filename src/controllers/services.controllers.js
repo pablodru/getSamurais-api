@@ -1,4 +1,4 @@
-import { getServicesDB, postServiceDB } from "../repository/services.repository.js";
+import { getServiceByIdDB, getServicesDB, postServiceDB } from "../repository/services.repository.js";
 
 export async function postService (req, res) {
     const { name, description, price, photo } = req.body;
@@ -21,6 +21,21 @@ export async function getServices (req, res) {
         const services = await getServicesDB();
 
         res.status(200).send(services.rows);
+
+    } catch (err) {
+        return res.status(500).send(err.message)
+    }
+}
+
+export async function getServiceById (req, res) {
+    const { id } = req.params;
+    try {
+
+        const service = await getServiceByIdDB(id);
+
+        if ( service.rowCount === 0 ) return res.sendStatus(404);
+
+        res.status(200).send(service.rows[0]);
 
     } catch (err) {
         return res.status(500).send(err.message)

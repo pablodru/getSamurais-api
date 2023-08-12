@@ -15,3 +15,12 @@ export async function getServicesDB() {
     `
     return db.query(query)
 }
+
+export async function getServiceByIdDB(id) {
+    const query = `
+        SELECT users.name AS name, users.phone AS phone, users.city AS city, services.name AS service, services.price AS price, services.photo AS photo, services.description AS description
+            FROM users JOIN services ON users.id = services."userId"
+            WHERE services.status = 'ativo' AND services.id = $1
+    `
+    return db.query(query, [id]);
+}
