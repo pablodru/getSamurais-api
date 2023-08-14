@@ -6,6 +6,7 @@ export async function getMyServicesDB (userId){
         SELECT services.status AS status, services.photo AS photo, services.name AS service, services.price AS price, services.id AS id FROM services
             JOIN users ON users.id = services."userId"
             WHERE services."userId"=$1
+            ORDER BY services.id ASC
     `
     return db.query(query, [userId])
 }
