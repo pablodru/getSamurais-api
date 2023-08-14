@@ -11,7 +11,8 @@ export async function getServicesDB() {
     const query = `
         SELECT users.name AS name, users.city AS city, services.name AS service, services.id AS id, services.price AS price, services.photo AS photo
             FROM users JOIN services ON users.id = services."userId"
-            WHERE services.status = 'ativo' 
+            WHERE services.status = 'ativo'
+            ORDER BY services.id DESC
     `
     return db.query(query)
 }
